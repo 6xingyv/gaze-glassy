@@ -1,6 +1,6 @@
 # Gaze Glassy
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.accompanist/lyrics-ui)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.gaze/glassy)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy)
 [![Telegram](https://img.shields.io/badge/Telegram-Community-blue?logo=telegram)](https://t.me/mocha_pot)
 
 ## 📦 Repository
