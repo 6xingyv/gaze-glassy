@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="gaze-glassy">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="gaze-glassy.jar" />
+  </artifact>
+</component>
