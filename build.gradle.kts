@@ -146,7 +146,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("com.mocharealm.gaze", "glassy", "1.0.0")
+    coordinates("com.mocharealm.gaze", "glassy", "1.0.0-patch1")
 
     pom {
         name = "Gaze Glassy"
