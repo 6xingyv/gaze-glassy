@@ -5,3 +5,7 @@
 /build/classes/kotlin/js/main/
 /build/classes/kotlin/jvm/main/
 /build/classes/kotlin/wasmJs/main/
+
+# Module build directories
+/core/build/
+/liquid/build/
