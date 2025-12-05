@@ -17,11 +17,11 @@ This repository hosts the `glassy` code.
 
 This project is organized into two modules:
 
-- **`core`** (`com.mocharealm.gaze.core`): Contains the platform abstraction layer for RuntimeShader and RenderEffect
-  - [`PlatformRuntimeShader`](./core/src/commonMain/kotlin/com/mocharealm/gaze/core/platform/PlatformRuntimeShader.kt): Cross-platform RuntimeShader abstraction
-  - [`PlatformRenderEffect`](./core/src/commonMain/kotlin/com/mocharealm/gaze/core/platform/PlatformRenderEffect.kt): Cross-platform RenderEffect abstraction
+- **`core`** (`com.mocharealm.gaze.glassy.core`): Contains the platform abstraction layer for RuntimeShader and RenderEffect
+  - [`PlatformRuntimeShader`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRuntimeShader.kt): Cross-platform RuntimeShader abstraction
+  - [`PlatformRenderEffect`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRenderEffect.kt): Cross-platform RenderEffect abstraction
 
-- **`liquid`** (`com.mocharealm.gaze.glassy`): Contains the liquid glass specific implementation
+- **`liquid`** (`com.mocharealm.gaze.glassy.liquid`): Contains the liquid glass specific implementation
   - Backdrop system (LayerBackdrop, CanvasBackdrop, etc.)
   - Effects (Blur, ColorFilter, Lens, RenderEffect)
   - Shadow and InnerShadow
@@ -38,8 +38,8 @@ Desktop and Web targets.
 
 What's more, this migration also brings some new features and improvements:
 
-1. KMP [`RuntimeShader`](./core/src/commonMain/kotlin/com/mocharealm/gaze/core/platform/PlatformRuntimeShader.kt) & [
-   `RenderEffect`](./core/src/commonMain/kotlin/com/mocharealm/gaze/core/platform/PlatformRenderEffect.kt)
+1. KMP [`RuntimeShader`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRuntimeShader.kt) & [
+   `RenderEffect`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRenderEffect.kt)
 
    With gaze-glassy, you can write shader code once and have it run on all supported platforms, including Android, iOS,
    Desktop, and Web. This is achieved by leveraging platform-specific APIs under the hood while providing a unified
@@ -65,10 +65,10 @@ import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.invalidateDraw
 import androidx.compose.ui.node.requireGraphicsContext
 import androidx.compose.ui.unit.toIntSize
-import com.mocharealm.gaze.core.platform.PlatformVersion
-import com.mocharealm.gaze.core.platform.convertToComposeRenderEffect
-import com.mocharealm.gaze.core.platform.createRuntimeShader
-import com.mocharealm.gaze.core.platform.createRuntimeShaderEffect
+import com.mocharealm.gaze.glassy.core.platform.PlatformVersion
+import com.mocharealm.gaze.glassy.core.platform.convertToComposeRenderEffect
+import com.mocharealm.gaze.glassy.core.platform.createRuntimeShader
+import com.mocharealm.gaze.glassy.core.platform.createRuntimeShaderEffect
 import kotlinx.coroutines.launch
 //import org.intellij.lang.annotations.Language // Not available in KMP(Web)
 

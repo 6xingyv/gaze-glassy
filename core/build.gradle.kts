@@ -19,7 +19,7 @@ java {
 
 kotlin {
     androidLibrary {
-        namespace = "com.mocharealm.gaze.core"
+        namespace = "com.mocharealm.gaze.glassy.core"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
 
         minSdk = libs.versions.android.minSdk.get().toInt()
