@@ -1,7 +1,7 @@
 # 项目排除路径
 /.gradle/
 /.kotlin/
-*/build/
+/build/
 /build/classes/kotlin/js/main/
 /build/classes/kotlin/jvm/main/
 /build/classes/kotlin/wasmJs/main/
