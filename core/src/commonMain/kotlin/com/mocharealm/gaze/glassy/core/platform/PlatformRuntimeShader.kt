@@ -5,6 +5,7 @@ package com.mocharealm.gaze.glassy.core.platform
 /**
  * Platform-specific runtime shader implementation
  */
+@Suppress("unused")
 expect class PlatformRuntimeShader {
     fun setIntUniform(name: String, value: Int)
     fun setFloatUniform(name: String, value: Float)

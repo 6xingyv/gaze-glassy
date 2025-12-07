@@ -1,6 +1,6 @@
 # Gaze Glassy
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.gaze/glassy)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.gaze/glassy-core)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy)
 [![Telegram](https://img.shields.io/badge/Telegram-Community-blue?logo=telegram)](https://t.me/mocha_pot)
 
 ## 📦 Repository
@@ -15,13 +15,11 @@ This repository hosts the `glassy` code.
 
 ---
 
-Gaze Glassy is the direct downstream project
+Gaze Glassy Liquid is the direct downstream project
 of [Kyant's Backdrop (a.k.a. AndroidLiquidGlass)](https://github.com/Kyant0/AndroidLiquidGlass/).
 
 This library migrate the original Jetpack Compose implementation to Compose Multiplatform, making it available for iOS+,
 Desktop and Web targets.
-
-What's more, this migration also brings some new features and improvements:
 
 1. KMP [`RuntimeShader`](./src/commonMain/kotlin/com/mocharealm/gaze/glassy/platform/PlatformRuntimeShader.kt) & [
    `RenderEffect`](./src/commonMain/kotlin/com/mocharealm/gaze/glassy/platform/PlatformRenderEffect.kt)
@@ -34,30 +32,6 @@ What's more, this migration also brings some new features and improvements:
 Example usage of `RuntimeShader` and `RenderEffect`:
 
 ```Kotlin
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.IndicationNodeFactory
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.drawscope.ContentDrawScope
-import androidx.compose.ui.graphics.layer.GraphicsLayer
-import androidx.compose.ui.graphics.layer.drawLayer
-import androidx.compose.ui.node.DelegatableNode
-import androidx.compose.ui.node.DrawModifierNode
-import androidx.compose.ui.node.invalidateDraw
-import androidx.compose.ui.node.requireGraphicsContext
-import androidx.compose.ui.unit.toIntSize
-import com.mocharealm.gaze.glassy.platform.PlatformVersion
-import com.mocharealm.gaze.glassy.platform.convertToComposeRenderEffect
-import com.mocharealm.gaze.glassy.platform.createRuntimeShader
-import com.mocharealm.gaze.glassy.platform.createRuntimeShaderEffect
-import kotlinx.coroutines.launch
-//import org.intellij.lang.annotations.Language // Not available in KMP(Web)
-
-//@Language("AGSL")
 private const val RippleShaderString = """
 uniform shader content;
 uniform float2 iResolution;
@@ -171,14 +145,11 @@ private class RippleIndicationNode(
     private var runtimeShader = if (PlatformVersion.supportsRuntimeShader()) {
         try {
             val shader = createRuntimeShader(RippleShaderString)
-            println("RippleIndication: RuntimeShader created successfully")
             shader
         } catch (e: Exception) {
-            println("RippleIndication: Failed to create RuntimeShader: ${e.message}")
             null
         }
     } else {
-        println("RippleIndication: Runtime shader not supported on this platform")
         null
     }
 
@@ -293,12 +264,7 @@ private class RippleIndicationNode(
                 val composeEffect = convertToComposeRenderEffect(effect)
                 if (composeEffect != null) {
                     layer.renderEffect = composeEffect
-                    println("RippleIndication: Effect applied successfully, rippleCount=${activeRipples.size}")
-                } else {
-                    println("RippleIndication: Failed to convert to Compose RenderEffect")
                 }
-            } else {
-                println("RippleIndication: Failed to create RuntimeShaderEffect")
             }
         } else {
             layer.renderEffect = null
