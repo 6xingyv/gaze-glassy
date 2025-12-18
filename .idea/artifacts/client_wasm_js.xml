@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="client-wasm-js">
+    <output-path>$PROJECT_DIR$/liquid/settings/client/build/libs</output-path>
+    <root id="archive" name="client-wasm-js.jar">
+      <element id="module-output" name="gaze-glassy.liquid.settings.client.wasmJsMain" />
+    </root>
+  </artifact>
+</component>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gaze-glassy.iml" filepath="$PROJECT_DIR$/.idea/modules/gaze-glassy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/liquid/settings/configurator/gaze-glassy.liquid.settings.configurator.main.iml" filepath="$PROJECT_DIR$/.idea/modules/liquid/settings/configurator/gaze-glassy.liquid.settings.configurator.main.iml" />
     </modules>
   </component>
 </project>

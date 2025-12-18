@@ -12,6 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/liquid" />
+            <option value="$PROJECT_DIR$/liquid/effect" />
+            <option value="$PROJECT_DIR$/liquid/settings" />
+            <option value="$PROJECT_DIR$/liquid/settings/client" />
+            <option value="$PROJECT_DIR$/liquid/settings/configurator" />
+            <option value="$PROJECT_DIR$/liquid/settings/core" />
           </set>
         </option>
       </GradleProjectSettings>

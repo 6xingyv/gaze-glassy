@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="effect">
+    <output-path>$PROJECT_DIR$/liquid/effect/build/libs</output-path>
+    <root id="archive" name="effect.jar">
+      <element id="module-output" name="gaze-glassy.liquid.effect.androidMain" />
+    </root>
+  </artifact>
+</component>

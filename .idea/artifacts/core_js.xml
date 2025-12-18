@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="core-js">
-    <output-path>$PROJECT_DIR$/core/build/libs</output-path>
+    <output-path>$PROJECT_DIR$/../gaze/core/build/libs</output-path>
     <root id="archive" name="core-js.jar">
-      <element id="module-output" name="gaze-glassy.core.jsMain" />
+      <element id="module-output" name="gaze.core.jsMain" />
     </root>
   </artifact>
 </component>

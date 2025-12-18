@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="window-desktop">
+    <output-path>$PROJECT_DIR$/../gaze/window/build/libs</output-path>
+    <root id="archive" name="window-desktop.jar">
+      <element id="module-output" name="gaze.window.desktopMain" />
+    </root>
+  </artifact>
+</component>

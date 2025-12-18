@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="configurator-js">
+    <output-path>$PROJECT_DIR$/liquid/settings/configurator/build/libs</output-path>
+    <root id="archive" name="configurator-js.jar">
+      <element id="module-output" name="gaze-glassy.liquid.settings.configurator.jsMain" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="effect-js">
+    <output-path>$PROJECT_DIR$/liquid/effect/build/libs</output-path>
+    <root id="archive" name="effect-js.jar">
+      <element id="module-output" name="gaze-glassy.liquid.effect.jsMain" />
+    </root>
+  </artifact>
+</component>

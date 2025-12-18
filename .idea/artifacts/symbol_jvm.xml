@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="symbol-jvm">
+    <output-path>$PROJECT_DIR$/../gaze/symbol/build/libs</output-path>
+    <root id="archive" name="symbol-jvm.jar">
+      <element id="module-output" name="gaze.symbol.jvmMain" />
+    </root>
+  </artifact>
+</component>
