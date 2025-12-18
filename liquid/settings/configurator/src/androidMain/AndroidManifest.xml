@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Glassy Configurator"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Glassy Configurator"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".GlassySettingsProvider"
+            android:authorities="com.mocharealm.gaze.glassy.settings.provider"
+            android:exported="true"
+            android:enabled="true" />
+            
+    </application>
+
+</manifest>

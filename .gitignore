@@ -1,4 +1,3 @@
-/.gradle/
-/.kotlin/
-/build/
-*/build/
+.gradle/
+.kotlin/
+build/
