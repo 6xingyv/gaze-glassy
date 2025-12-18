@@ -39,9 +39,7 @@ kotlin {
 
     listOf(
         iosArm64(),
-        iosSimulatorArm64(),
-        macosArm64(),
-        macosX64()
+        iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "GazeGlassyCore"
@@ -50,11 +48,6 @@ kotlin {
     }
 
     jvm()
-
-    js {
-        browser()
-        binaries.executable()
-    }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -74,6 +67,8 @@ kotlin {
             }
         }
     }
+
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
         commonMain {
@@ -103,31 +98,29 @@ kotlin {
             dependsOn(skikoMain)
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(libs.kotlinx.coroutinesSwing)
+                implementation(libs.kotlinx.coroutines.swing)
             }
-        }
-
-        jsMain {
-            dependsOn(skikoMain)
         }
 
         wasmJsMain {
             dependsOn(skikoMain)
         }
 
-        listOf(
-            iosArm64Main,
-            iosSimulatorArm64Main,
-            macosArm64Main,
-            macosX64Main
-        ).forEach { iosTarget ->
-            iosTarget {
-                dependsOn(skikoMain)
-            }
+        iosMain {
+            dependsOn(skikoMain)
         }
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "local"
+            url = uri("file:///D:/Android/Maven")
         }
     }
 }

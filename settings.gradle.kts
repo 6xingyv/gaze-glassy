@@ -24,11 +24,21 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven {
+            url = uri("file:///D:/Android/Maven")
+            mavenContent {
+                includeGroupAndSubgroups("com.mocharealm")
+            }
+        }
         mavenCentral()
     }
 }
 
-include(":core", ":liquid")
+include(":core")
+include(":liquid:effect")
+include(":liquid:settings:core")
+include(":liquid:settings:configurator")
+include(":liquid:settings:client")
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
