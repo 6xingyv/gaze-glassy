@@ -1,13 +1,12 @@
 package com.mocharealm.gaze.glassy.liquid.effect.effects
 
- import androidx.annotation.FloatRange
 import androidx.compose.ui.graphics.TileMode
-import com.mocharealm.gaze.glassy.liquid.effect.BackdropEffectScope
 import com.mocharealm.gaze.glassy.core.platform.PlatformVersion
 import com.mocharealm.gaze.glassy.core.platform.createBlurEffect
+import com.mocharealm.gaze.glassy.liquid.effect.BackdropEffectScope
 
 fun BackdropEffectScope.blur(
-    @FloatRange(from = 0.0) radius: Float = Float.NaN,
+    radius: Float = Float.NaN,
     edgeTreatment: TileMode = TileMode.Clamp
 ) {
     val config = configuration

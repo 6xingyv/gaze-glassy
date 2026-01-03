@@ -15,7 +15,7 @@ junit = "4.13.2"
 kotlin = "2.2.21"
 kotlinx-coroutines = "1.10.2"
 gaze-core = "1.0.0"
-gaze-glassy = "1.0.0-patch1"
+gaze-glassy = "2.0.0"
 gaze-capsule = "2.1.1-patch2"
 
 [libraries]

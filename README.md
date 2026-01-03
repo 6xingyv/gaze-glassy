@@ -1,6 +1,6 @@
 # Gaze Glassy
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.gaze/glassy-core)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mocharealm.gaze/glassy-core)](https://central.sonatype.com/artifact/com.mocharealm.gaze/glassy-core)
 [![Telegram](https://img.shields.io/badge/Telegram-Community-blue?logo=telegram)](https://t.me/mocha_pot)
 
 ## 📦 Repository
@@ -15,18 +15,27 @@ This repository hosts the `glassy` code.
 
 ---
 
-Gaze Glassy Liquid is the direct downstream project
-of [Kyant's Backdrop (a.k.a. AndroidLiquidGlass)](https://github.com/Kyant0/AndroidLiquidGlass/).
+## 🧩 Modules
 
-This library migrate the original Jetpack Compose implementation to Compose Multiplatform, making it available for iOS+,
-Desktop and Web targets.
+### `:core`
 
-1. KMP [`RuntimeShader`](./src/commonMain/kotlin/com/mocharealm/gaze/glassy/platform/PlatformRuntimeShader.kt) & [
-   `RenderEffect`](./src/commonMain/kotlin/com/mocharealm/gaze/glassy/platform/PlatformRenderEffect.kt)
+Provides cross-platform [`RuntimeShader`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRuntimeShader.kt) & [`RenderEffect`](./core/src/commonMain/kotlin/com/mocharealm/gaze/glassy/core/platform/PlatformRenderEffect.kt) implementation.
 
-   With gaze-glassy, you can write shader code once and have it run on all supported platforms, including Android, iOS,
-   Desktop, and Web. This is achieved by leveraging platform-specific APIs under the hood while providing a unified
-   interface for developers.
+With `gaze-glassy-core`, you can write shader code once and have it run on all supported platforms, including Android, iOS, Desktop, and Web. This is achieved by leveraging platform-specific APIs under the hood while providing a unified interface for developers.
+
+### `:liquid:effect`
+
+The Liquid Glass effect library.
+
+This module is the direct downstream project of [Kyant's Backdrop (a.k.a. AndroidLiquidGlass)](https://github.com/Kyant0/AndroidLiquidGlass/). It migrates the original Jetpack Compose implementation to Compose Multiplatform.
+
+### `:liquid:settings`
+
+Settings management for the liquid effect.
+
+- `:liquid:settings:core`: Core logic and data models for settings.
+- `:liquid:settings:client`: Client-side implementation for applying settings.
+- `:liquid:settings:configurator`: UI/Tooling for configuring the effect parameters.
 
 
 Example usage of `RuntimeShader` and `RenderEffect`:
