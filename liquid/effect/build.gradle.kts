@@ -113,11 +113,13 @@ kotlin {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "local"
-            url = uri("file:///D:/Android/Maven")
+providers.gradleProperty("localMavenRepo").orNull?.takeIf { it.isNotBlank() }?.let { localMavenRepo ->
+    publishing {
+        repositories {
+            maven {
+                name = "local"
+                url = uri(localMavenRepo)
+            }
         }
     }
 }

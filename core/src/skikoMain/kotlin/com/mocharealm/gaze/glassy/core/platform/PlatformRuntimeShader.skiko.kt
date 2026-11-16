@@ -30,6 +30,10 @@ actual class PlatformRuntimeShader(internal val shader: RuntimeShaderBuilder) {
     actual fun setIntUniform(name: String, value: Int) {
         shader.uniform(name, value)
     }
+
+    actual fun setInputShader(name: String, shader: PlatformShader) {
+        this.shader.child(name, shader.shader)
+    }
 }
 
 actual fun createRuntimeShader(

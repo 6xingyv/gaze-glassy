@@ -203,6 +203,153 @@ half4 main(float2 coord) {
 }"""
 
 //@Language("AGSL")
+internal const val GenericShapeRefractionShaderString = """
+uniform shader content;
+uniform shader sdfSeeds;
+
+uniform float2 size;
+uniform float2 offset;
+uniform float refractionHeight;
+uniform float refractionAmount;
+uniform float depthEffect;
+
+float circleMap(float x) {
+    return 1.0 - sqrt(1.0 - x * x);
+}
+
+half4 main(float2 coord) {
+    float2 localCoord = coord + offset;
+    float2 seed = sdfSeeds.eval(localCoord).rg * size;
+    float sd = length(localCoord - seed);
+    if (sd >= refractionHeight) {
+        return content.eval(coord);
+    }
+    float d = circleMap(1.0 - sd / refractionHeight) * refractionAmount;
+    float2 grad = normalize(localCoord - seed + depthEffect * (localCoord - size * 0.5));
+    return content.eval(coord + d * grad);
+}"""
+
+internal const val GenericShapeRefractionWithDispersionShaderString = """
+uniform shader content;
+uniform shader sdfSeeds;
+
+uniform float2 size;
+uniform float2 offset;
+uniform float refractionHeight;
+uniform float refractionAmount;
+uniform float depthEffect;
+uniform float chromaticAberration;
+
+float circleMap(float x) {
+    return 1.0 - sqrt(1.0 - x * x);
+}
+
+half4 main(float2 coord) {
+    float2 localCoord = coord + offset;
+    float2 halfSize = size * 0.5;
+    float2 seed = sdfSeeds.eval(localCoord).rg * size;
+    float sd = length(localCoord - seed);
+    if (sd >= refractionHeight) {
+        return content.eval(coord);
+    }
+    float d = circleMap(1.0 - sd / refractionHeight) * refractionAmount;
+    float2 grad = normalize(localCoord - seed + depthEffect * (localCoord - halfSize));
+    float2 refractedCoord = coord + d * grad;
+    float2 centeredCoord = localCoord - halfSize;
+    float dispersionIntensity = chromaticAberration * ((centeredCoord.x * centeredCoord.y) / (halfSize.x * halfSize.y));
+    float2 dispersedCoord = d * grad * dispersionIntensity;
+
+    half4 color = half4(0.0);
+    half4 red = content.eval(refractedCoord + dispersedCoord);
+    color.r += red.r / 3.5; color.a += red.a / 7.0;
+    half4 orange = content.eval(refractedCoord + dispersedCoord * (2.0 / 3.0));
+    color.r += orange.r / 3.5; color.g += orange.g / 7.0; color.a += orange.a / 7.0;
+    half4 yellow = content.eval(refractedCoord + dispersedCoord * (1.0 / 3.0));
+    color.r += yellow.r / 3.5; color.g += yellow.g / 3.5; color.a += yellow.a / 7.0;
+    half4 green = content.eval(refractedCoord);
+    color.g += green.g / 3.5; color.a += green.a / 7.0;
+    half4 cyan = content.eval(refractedCoord - dispersedCoord * (1.0 / 3.0));
+    color.g += cyan.g / 3.5; color.b += cyan.b / 3.0; color.a += cyan.a / 7.0;
+    half4 blue = content.eval(refractedCoord - dispersedCoord * (2.0 / 3.0));
+    color.b += blue.b / 3.0; color.a += blue.a / 7.0;
+    half4 purple = content.eval(refractedCoord - dispersedCoord);
+    color.r += purple.r / 7.0; color.b += purple.b / 3.0; color.a += purple.a / 7.0;
+    return color;
+}"""
+
+internal const val GenericShapeHighlightShaderString = """
+uniform shader sdfSeeds;
+uniform float2 size;
+uniform float angle;
+uniform float falloff;
+
+half4 main(float2 coord) {
+    float2 seed = sdfSeeds.eval(coord).rg * size;
+    float2 grad = normalize(coord - seed);
+    float2 normal = float2(cos(angle), sin(angle));
+    float d = dot(grad, normal);
+    float intensity = pow(abs(d), falloff);
+    return half4(1.0) * intensity;
+}"""
+
+internal const val GenericShapeAmbientHighlightShaderString = """
+uniform shader sdfSeeds;
+uniform float2 size;
+uniform float angle;
+uniform float falloff;
+
+half4 main(float2 coord) {
+    float2 seed = sdfSeeds.eval(coord).rg * size;
+    float2 grad = normalize(coord - seed);
+    float2 normal = float2(cos(angle), sin(angle));
+    float d = dot(grad, normal);
+    float intensity = pow(abs(d), falloff);
+    float t = step(0.0, d);
+    return half4(t, t, t, 1.0) * intensity;
+}"""
+
+// JFA shaders — seed coords stored as (x/w, y/h) in RG, sentinel = (-1,-1)
+internal const val JfaInitShaderString = """
+uniform shader mask;
+uniform float2 size;
+
+half4 main(float2 coord) {
+    float inside = mask.eval(coord).r;
+    if (inside > 0.5) {
+        return half4(coord.x / size.x, coord.y / size.y, 0.0, 1.0);
+    }
+    return half4(-1.0, -1.0, 0.0, 1.0);
+}"""
+
+internal const val JfaStepShaderString = """
+uniform shader prev;
+uniform float2 size;
+uniform float stepSize;
+
+half4 main(float2 coord) {
+    half4 best = prev.eval(coord);
+    float bestDist = 1e9;
+    if (best.r >= 0.0) {
+        float2 s = best.rg * size;
+        bestDist = length(coord - s);
+    }
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            if (dx == 0 && dy == 0) continue;
+            float2 sampleCoord = coord + float2(float(dx), float(dy)) * stepSize;
+            half4 candidate = prev.eval(sampleCoord);
+            if (candidate.r < 0.0) continue;
+            float2 s = candidate.rg * size;
+            float dist = length(coord - s);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = candidate;
+            }
+        }
+    }
+    return best;
+}"""
+
 internal const val GammaAdjustmentShaderString = """
 uniform shader content;
 

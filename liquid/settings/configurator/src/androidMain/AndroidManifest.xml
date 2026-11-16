@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Glassy Configurator"
             android:theme="@android:style/Theme.Material.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,8 @@
             android:name=".GlassySettingsProvider"
             android:authorities="com.mocharealm.gaze.glassy.settings.provider"
             android:exported="true"
-            android:enabled="true" />
+            android:enabled="true"
+                tools:ignore="ExportedContentProvider" />
             
     </application>
 

@@ -254,7 +254,9 @@ private class DrawBackdropNode(
         object : BackdropEffectScopeImpl() {
 
             override val shape: Shape get() = shapeProvider.innerShape
-            
+
+            override val sdfImage get() = shapeProvider.obtainSdfImage(size, layoutDirection, this)
+
                 override var configuration: GlassyConfiguration
                 get() = this@DrawBackdropNode.configuration
                 set(value) { /* Read-only from node perspective, but interface allows set */ }
@@ -413,6 +415,7 @@ private class DrawBackdropNode(
         }
 
         effectScope.reset()
+        shapeProvider.dispose()
         layoutCoordinates = null
         exportedBackdrop?.layerCoordinates = null
     }

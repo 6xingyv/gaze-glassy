@@ -10,7 +10,7 @@ fun BackdropEffectScope.blur(
     edgeTreatment: TileMode = TileMode.Clamp
 ) {
     val config = configuration
-    val actualRadius = if (radius.isNaN()) config.blurRadius else radius
+    val actualRadius = if (radius.isNaN()) 0f else radius * config.blurRadius
 
     if (!PlatformVersion.supportsRenderEffect()) {
         println("Blur: RenderEffect not supported")

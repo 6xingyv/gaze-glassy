@@ -30,8 +30,6 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(projects.liquid.settings.core)
-            implementation(projects.liquid.effect)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -40,6 +38,9 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(libs.gaze.core)
+            implementation(projects.liquid.settings.core)
+            implementation(projects.liquid.settings.client)
+            implementation(projects.liquid.effect)
         }
     }
 }

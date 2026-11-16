@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import com.mocharealm.gaze.glassy.core.platform.PlatformRenderEffect
 import com.mocharealm.gaze.glassy.core.platform.PlatformRuntimeShader
+import com.mocharealm.gaze.glassy.core.platform.PlatformSdfImage
 import com.mocharealm.gaze.glassy.liquid.settings.core.GlassyConfiguration
 
 sealed interface BackdropEffectScope : Density, RuntimeShaderCache {
@@ -17,10 +18,17 @@ sealed interface BackdropEffectScope : Density, RuntimeShaderCache {
 
     val shape: Shape
 
+    /**
+     * SDF texture baked from the current shape's outline. RG channels store the
+     * nearest boundary seed coordinate normalised to [0,1]. Null on platforms
+     * without runtime-shader support or when shape isn't laid out yet.
+     */
+    val sdfImage: PlatformSdfImage?
+
     var padding: Float
 
     var renderEffect: PlatformRenderEffect?
-    
+
     var configuration: GlassyConfiguration
 }
 
@@ -33,6 +41,7 @@ internal abstract class BackdropEffectScopeImpl : BackdropEffectScope, RuntimeSh
     override var padding: Float = 0f
     override var renderEffect: PlatformRenderEffect? = null
     override var configuration: GlassyConfiguration = GlassyConfiguration()
+    override val sdfImage: PlatformSdfImage? get() = null
 
 
     private val runtimeShaderCache = RuntimeShaderCacheImpl()

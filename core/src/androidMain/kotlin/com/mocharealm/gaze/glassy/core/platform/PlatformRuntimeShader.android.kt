@@ -31,6 +31,10 @@ actual class PlatformRuntimeShader(private val shader: RuntimeShader) {
     actual fun setIntUniform(name: String, value: Int) {
         shader.setIntUniform(name, value)
     }
+
+    actual fun setInputShader(name: String, shader: PlatformShader) {
+        this.shader.setInputShader(name, shader.shader)
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)

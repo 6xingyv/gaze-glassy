@@ -155,10 +155,12 @@ internal class HighlightNode(
             }
         )
         if (PlatformVersion.supportsRenderEffect()) {
+            val sdf = shapeProvider.obtainSdfImage(size, layoutDirection, this)
             val shader = with(highlight.style) {
                 createShader(
                     shape = shapeProvider.shape,
-                    runtimeShaderCache = runtimeShaderCache
+                    runtimeShaderCache = runtimeShaderCache,
+                    sdfImage = sdf
                 )
             }
             paint.setPlatformShader(shader?.asPlatformShader())

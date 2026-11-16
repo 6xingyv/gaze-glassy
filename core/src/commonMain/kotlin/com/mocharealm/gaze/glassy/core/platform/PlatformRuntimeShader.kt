@@ -13,6 +13,7 @@ expect class PlatformRuntimeShader {
     fun setFloatUniform(name: String, value1: Float, value2: Float, value3: Float)
     fun setFloatUniform(name: String, value1: Float, value2: Float, value3: Float, value4: Float)
     fun setFloatUniform(name: String, values: FloatArray)
+    fun setInputShader(name: String, shader: PlatformShader)
 }
 
 expect fun createRuntimeShader(

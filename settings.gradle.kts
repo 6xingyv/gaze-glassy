@@ -17,17 +17,19 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        providers.gradleProperty("localMavenRepo").orNull?.takeIf { it.isNotBlank() }?.let { localMavenRepo ->
+            maven {
+                url = uri(localMavenRepo)
+                mavenContent {
+                    includeGroupAndSubgroups("com.mocharealm")
+                }
+            }
+        }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
-            }
-        }
-        maven {
-            url = uri("file:///D:/Android/Maven")
-            mavenContent {
-                includeGroupAndSubgroups("com.mocharealm")
             }
         }
         mavenCentral()

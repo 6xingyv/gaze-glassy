@@ -13,7 +13,10 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.util.fastCoerceAtMost
 import com.mocharealm.gaze.glassy.liquid.effect.AmbientHighlightShaderString
 import com.mocharealm.gaze.glassy.liquid.effect.DefaultHighlightShaderString
+import com.mocharealm.gaze.glassy.liquid.effect.GenericShapeAmbientHighlightShaderString
+import com.mocharealm.gaze.glassy.liquid.effect.GenericShapeHighlightShaderString
 import com.mocharealm.gaze.glassy.liquid.effect.RuntimeShaderCache
+import com.mocharealm.gaze.glassy.core.platform.PlatformSdfImage
 import com.mocharealm.gaze.glassy.core.platform.PlatformVersion
 import com.mocharealm.gaze.glassy.core.platform.asShader
 import kotlin.math.PI
@@ -26,7 +29,8 @@ interface HighlightStyle {
     val blendMode: BlendMode
     fun DrawScope.createShader(
         shape: Shape,
-        runtimeShaderCache: RuntimeShaderCache
+        runtimeShaderCache: RuntimeShaderCache,
+        sdfImage: PlatformSdfImage?
     ): Shader?
 
     @Immutable
@@ -37,7 +41,8 @@ interface HighlightStyle {
 
         override fun DrawScope.createShader(
             shape: Shape,
-            runtimeShaderCache: RuntimeShaderCache
+            runtimeShaderCache: RuntimeShaderCache,
+            sdfImage: PlatformSdfImage?
         ): Shader? = null
     }
 
@@ -53,20 +58,25 @@ interface HighlightStyle {
 
         override fun DrawScope.createShader(
             shape: Shape,
-            runtimeShaderCache: RuntimeShaderCache
+            runtimeShaderCache: RuntimeShaderCache,
+            sdfImage: PlatformSdfImage?
         ): Shader? {
-            return if (PlatformVersion.supportsRuntimeShader()) {
-                runtimeShaderCache.obtainRuntimeShader(
-                    "Default",
-                    DefaultHighlightShaderString
-                ).apply {
+            if (!PlatformVersion.supportsRuntimeShader()) return null
+            return if (shape is CornerBasedShape) {
+                runtimeShaderCache.obtainRuntimeShader("Default", DefaultHighlightShaderString).apply {
                     setFloatUniform("size", size.width, size.height)
                     setFloatUniform("cornerRadii", getCornerRadii(shape))
                     setFloatUniform("angle", angle * (PI / 180f).toFloat())
                     setFloatUniform("falloff", falloff)
                 }.asShader().shader
             } else {
-                null
+                val sdf = sdfImage ?: return null
+                runtimeShaderCache.obtainRuntimeShader("GenericDefault", GenericShapeHighlightShaderString).apply {
+                    setFloatUniform("size", size.width, size.height)
+                    setFloatUniform("angle", angle * (PI / 180f).toFloat())
+                    setFloatUniform("falloff", falloff)
+                    setInputShader("sdfSeeds", sdf.toShader())
+                }.asShader().shader
             }
         }
     }
@@ -81,19 +91,25 @@ interface HighlightStyle {
 
         override fun DrawScope.createShader(
             shape: Shape,
-            runtimeShaderCache: RuntimeShaderCache
+            runtimeShaderCache: RuntimeShaderCache,
+            sdfImage: PlatformSdfImage?
         ): Shader? {
-            return if (PlatformVersion.supportsRuntimeShader()) {
-                runtimeShaderCache.obtainRuntimeShader(
-                    "Ambient",
-                    AmbientHighlightShaderString
-                ).apply {
+            if (!PlatformVersion.supportsRuntimeShader()) return null
+            return if (shape is CornerBasedShape) {
+                runtimeShaderCache.obtainRuntimeShader("Ambient", AmbientHighlightShaderString).apply {
                     setFloatUniform("size", size.width, size.height)
                     setFloatUniform("cornerRadii", getCornerRadii(shape))
                     setFloatUniform("angle", 45f * (PI / 180f).toFloat())
+                    setFloatUniform("falloff", 1f)
                 }.asShader().shader
             } else {
-                null
+                val sdf = sdfImage ?: return null
+                runtimeShaderCache.obtainRuntimeShader("GenericAmbient", GenericShapeAmbientHighlightShaderString).apply {
+                    setFloatUniform("size", size.width, size.height)
+                    setFloatUniform("angle", 45f * (PI / 180f).toFloat())
+                    setFloatUniform("falloff", 1f)
+                    setInputShader("sdfSeeds", sdf.toShader())
+                }.asShader().shader
             }
         }
     }
